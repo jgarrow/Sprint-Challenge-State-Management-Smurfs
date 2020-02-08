@@ -93,7 +93,7 @@ export const smurfReducer = (state = initialState, action) => {
         case TOGGLE_IS_EDITING:
             return {
                 ...state,
-                isEditing: true,
+                isEditing: !state.isEditing,
                 smurfToEdit: action.payload
             };
         case EDIT_SMURF:

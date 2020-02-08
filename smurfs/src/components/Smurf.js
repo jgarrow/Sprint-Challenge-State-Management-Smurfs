@@ -15,6 +15,7 @@ const Card = styled.div`
     position: relative;
     width: 150px;
     margin: 0.5rem 0;
+    background: white;
 `;
 
 const PencilIcon = styled(MdEdit)`

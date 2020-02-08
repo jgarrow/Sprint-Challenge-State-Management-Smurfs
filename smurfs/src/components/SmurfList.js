@@ -9,7 +9,7 @@ import Smurf from "./Smurf";
 const CardsContainer = styled.div`
     width: 80%;
     max-width: 960px;
-    margin: 0 auto;
+    margin: 1rem auto;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;

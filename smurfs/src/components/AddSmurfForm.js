@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 import { addSmurf } from "../actions/smurfActions";
+
+import { Form, Button, Label, Input } from "./EditSmurfForm";
+
+const StyledForm = styled(Form)`
+    width: 300px;
+    margin: 0 auto;
+    background: white;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px 0px lightgrey;
+`;
 
 const AddSmurfForm = props => {
     const [newSmurf, setNewSmurf] = useState({
@@ -36,9 +49,9 @@ const AddSmurfForm = props => {
     };
 
     return (
-        <form>
-            <label htmlFor="name">Name: </label>
-            <input
+        <StyledForm>
+            <Label htmlFor="name">Name: </Label>
+            <Input
                 id="name"
                 type="text"
                 name="name"
@@ -47,8 +60,8 @@ const AddSmurfForm = props => {
                 placeholder="Smurf name"
             />
 
-            <label htmlFor="age">Age: </label>
-            <input
+            <Label htmlFor="age">Age: </Label>
+            <Input
                 id="age"
                 type="number"
                 name="age"
@@ -57,8 +70,8 @@ const AddSmurfForm = props => {
                 placeholder="Age"
             />
 
-            <label htmlFor="height">Height: </label>
-            <input
+            <Label htmlFor="height">Height: </Label>
+            <Input
                 id="height"
                 type="text"
                 name="height"
@@ -67,8 +80,8 @@ const AddSmurfForm = props => {
                 placeholder="Height in cm"
             />
 
-            <button onClick={e => handleSubmit(e, newSmurf)}>Add Smurf</button>
-        </form>
+            <Button onClick={e => handleSubmit(e, newSmurf)}>Add Smurf</Button>
+        </StyledForm>
     );
 };
 

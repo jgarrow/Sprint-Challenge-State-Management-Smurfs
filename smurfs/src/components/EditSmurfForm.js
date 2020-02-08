@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { editSmurf } from "../actions/smurfActions";
+import { editSmurf, toggleIsEditing } from "../actions/smurfActions";
+
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const Modal = styled.div`
     background: rgba(0, 0, 0, 0.4);
@@ -19,13 +21,44 @@ const Modal = styled.div`
     left: 0;
 `;
 
-const Form = styled.form`
+const XIcon = styled(IoMdCloseCircleOutline)`
+    position: absolute;
+    top: -20px;
+    right: -25px;
+    cursor: pointer;
+    font-size: 1.75rem;
+`;
+
+const FormContainer = styled.div`
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px 0px lightgray;
+    box-sizing: border-box;
+    padding: 2rem 1rem;
+`;
+
+export const Form = styled.form`
     display: grid;
     grid-template-columns: 70px 1fr;
     grid-gap: 15px;
 `;
 
-const Button = styled.button`
+export const Label = styled.label`
+    align-self: center;
+`;
+
+export const Input = styled.input`
+    font-size: 1rem;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid gray;
+`;
+
+export const Button = styled.button`
     font-size: 1rem;
     box-sizing: border-box;
     padding: 5px 10px;
@@ -43,7 +76,12 @@ const Button = styled.button`
     }
 `;
 
-const EditSmurfForm = ({ smurfToEdit, isEditing, editSmurf }) => {
+const EditSmurfForm = ({
+    smurfToEdit,
+    isEditing,
+    editSmurf,
+    toggleIsEditing
+}) => {
     const [editedSmurf, setEditedSmurf] = useState({
         name: "",
         age: 0,
@@ -78,7 +116,12 @@ const EditSmurfForm = ({ smurfToEdit, isEditing, editSmurf }) => {
         console.log("smurf in handleSubmit in edit form: ", smurf);
 
         editSmurf(smurf);
+        toggleIsEditing(smurf);
     };
+
+    // const handleCloseModal = () => {
+    //     toggleIsEditing(smurfToEdit);
+    // }
 
     console.log("editedSmurf: ", editedSmurf);
     console.log("smurfToEdit: ", smurfToEdit);
@@ -86,41 +129,44 @@ const EditSmurfForm = ({ smurfToEdit, isEditing, editSmurf }) => {
     return (
         <Modal isEditing={isEditing}>
             {editedSmurf !== {} && (
-                <Form>
-                    <label htmlFor="edit_name">Name: </label>
-                    <input
-                        id="edit_name"
-                        type="text"
-                        name="name"
-                        value={editedSmurf.name}
-                        onChange={handleChange}
-                        placeholder="Smurf name"
-                    />
+                <FormContainer>
+                    <XIcon onClick={() => toggleIsEditing(smurfToEdit)} />
+                    <Form>
+                        <Label htmlFor="edit_name">Name: </Label>
+                        <Input
+                            id="edit_name"
+                            type="text"
+                            name="name"
+                            value={editedSmurf.name}
+                            onChange={handleChange}
+                            placeholder="Smurf name"
+                        />
 
-                    <label htmlFor="edit_age">Age: </label>
-                    <input
-                        id="edit_age"
-                        type="number"
-                        name="age"
-                        value={editedSmurf.age}
-                        onChange={handleChange}
-                        placeholder="Age"
-                    />
+                        <Label htmlFor="edit_age">Age: </Label>
+                        <Input
+                            id="edit_age"
+                            type="number"
+                            name="age"
+                            value={editedSmurf.age}
+                            onChange={handleChange}
+                            placeholder="Age"
+                        />
 
-                    <label htmlFor="edit_height">Height: </label>
-                    <input
-                        id="edit_height"
-                        type="text"
-                        name="height"
-                        value={editedSmurf.height}
-                        onChange={handleChange}
-                        placeholder="Height in cm"
-                    />
+                        <Label htmlFor="edit_height">Height: </Label>
+                        <Input
+                            id="edit_height"
+                            type="text"
+                            name="height"
+                            value={editedSmurf.height}
+                            onChange={handleChange}
+                            placeholder="Height in cm"
+                        />
 
-                    <Button onClick={e => handleSubmit(e, editedSmurf)}>
-                        Edit Smurf
-                    </Button>
-                </Form>
+                        <Button onClick={e => handleSubmit(e, editedSmurf)}>
+                            Edit Smurf
+                        </Button>
+                    </Form>
+                </FormContainer>
             )}
         </Modal>
     );
@@ -133,4 +179,6 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { editSmurf })(EditSmurfForm);
+export default connect(mapStateToProps, { editSmurf, toggleIsEditing })(
+    EditSmurfForm
+);

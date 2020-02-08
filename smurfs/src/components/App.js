@@ -16,16 +16,30 @@ const AppContainer = styled.div`
     width: 100%;
     height: 100%;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ContentWrapper = styled.div`
+    width: 80%;
+    max-width: 960px;
+`;
+
+const Title = styled.h1`
+    text-align: center;
 `;
 
 function App() {
     return (
         <Provider store={store}>
             <AppContainer>
-                <div>Hello World</div>
-                <AddSmurfForm />
-                <EditSmurfForm />
-                <SmurfList />
+                <ContentWrapper>
+                    <Title>Welcome to Smurfville!</Title>
+                    <AddSmurfForm />
+                    <EditSmurfForm />
+                    <SmurfList />
+                </ContentWrapper>
             </AppContainer>
         </Provider>
     );
