@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
-const AddSmurfForm = () => {
+import { addSmurf } from "../actions/smurfActions";
+
+const AddSmurfForm = props => {
     const [newSmurf, setNewSmurf] = useState({
         name: "",
         age: 0,
@@ -13,14 +16,17 @@ const AddSmurfForm = () => {
             ...newSmurf,
             [e.target.name]: e.target.value
         });
+
         setNewSmurf({
             ...newSmurf,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = (e, smurf) => {
         e.preventDefault();
+        console.log("Smurf in handleSubmit: ", smurf);
+        props.addSmurf(smurf);
     };
 
     return (
@@ -55,9 +61,15 @@ const AddSmurfForm = () => {
                 placeholder="Height in cm"
             />
 
-            <button onSubmit={handleSubmit}>Add Smurf</button>
+            <button onClick={e => handleSubmit(e, newSmurf)}>Add Smurf</button>
         </form>
     );
 };
 
-export default AddSmurfForm;
+const mapStateToProps = state => {
+    return {
+        smurfs: state.smurfs
+    };
+};
+
+export default connect(mapStateToProps, { addSmurf })(AddSmurfForm);
