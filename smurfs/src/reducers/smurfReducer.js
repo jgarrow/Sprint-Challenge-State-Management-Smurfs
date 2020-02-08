@@ -41,22 +41,9 @@ export const smurfReducer = (state = initialState, action) => {
                 error: ""
             };
         case POST_NEW_SMURF_SUCCESS:
-            const tempSmurfs = [...state.smurfs];
-            let smurfIndex = action.payload.id
-                ? action.payload.id
-                : tempSmurfs.length - 1;
-
-            if (action.payload.height.slice(-2) !== "cm") {
-                tempSmurfs[smurfIndex].height = `${action.payload.height}cm`;
-            }
-
-            tempSmurfs[smurfIndex].age = parseInt(tempSmurfs[smurfIndex].age);
-
-            console.log("tempSmurfs: ", tempSmurfs);
-
             return {
                 ...state,
-                smurfs: tempSmurfs,
+                smurfs: [...state.smurfs, action.payload],
                 isFetching: false,
                 error: ""
             };

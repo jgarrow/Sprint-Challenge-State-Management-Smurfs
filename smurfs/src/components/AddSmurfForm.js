@@ -7,20 +7,25 @@ const AddSmurfForm = props => {
     const [newSmurf, setNewSmurf] = useState({
         name: "",
         age: 0,
-        height: 0,
+        height: "",
         id: null
     });
 
     const handleChange = e => {
-        console.log("newSmurf: ", {
+        const tempSmurf = {
             ...newSmurf,
             [e.target.name]: e.target.value
-        });
+        };
 
-        setNewSmurf({
-            ...newSmurf,
-            [e.target.name]: e.target.value
-        });
+        if (e.target.name === "height" && tempSmurf.height.slice(-2) !== "cm") {
+            tempSmurf.height = e.target.value.toString().concat("cm");
+        } else if (e.target.name === "age") {
+            tempSmurf.age = parseInt(e.target.value);
+        }
+
+        console.log("newSmurf: ", tempSmurf);
+
+        setNewSmurf(tempSmurf);
     };
 
     const handleSubmit = (e, smurf) => {
@@ -54,7 +59,7 @@ const AddSmurfForm = props => {
             <label htmlFor="height">Height: </label>
             <input
                 id="height"
-                type="number"
+                type="text"
                 name="height"
                 value={newSmurf.height}
                 onChange={handleChange}
