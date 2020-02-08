@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 import { smurfReducer as reducer } from "../reducers/smurfReducer";
 
 import SmurfList from "./SmurfList";
+import AddSmurfForm from "./AddSmurfForm";
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -13,6 +14,7 @@ function App() {
     return (
         <Provider store={store}>
             <div>Hello World</div>
+            <AddSmurfForm />
             <SmurfList />
         </Provider>
     );
