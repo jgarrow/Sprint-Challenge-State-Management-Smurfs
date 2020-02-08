@@ -1,7 +1,20 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 import { getSmurfs } from "../actions/smurfActions";
+
+import Smurf from "./Smurf";
+
+const CardsContainer = styled.div`
+    width: 80%;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+`;
 
 const SmurfList = props => {
     const { getSmurfs } = props;
@@ -11,16 +24,12 @@ const SmurfList = props => {
     }, [getSmurfs]);
 
     return (
-        <div>
+        <CardsContainer>
             {props.smurfs &&
                 props.smurfs.map(smurf => (
-                    <div key={smurf.id}>
-                        <h2>{smurf.name}</h2>
-                        <p>Age: {smurf.age}</p>
-                        <p>Height: {smurf.height}</p>
-                    </div>
+                    <Smurf key={smurf.id} smurf={smurf} />
                 ))}
-        </div>
+        </CardsContainer>
     );
 };
 

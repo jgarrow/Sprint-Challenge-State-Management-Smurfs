@@ -12,6 +12,7 @@ const AddSmurfForm = props => {
     });
 
     const handleChange = e => {
+        e.preventDefault();
         const tempSmurf = {
             ...newSmurf,
             [e.target.name]: e.target.value

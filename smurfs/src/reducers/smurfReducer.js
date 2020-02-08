@@ -4,13 +4,22 @@ import {
     FETCH_SMURF_DATA_FAILURE,
     POST_NEW_SMURF,
     POST_NEW_SMURF_SUCCESS,
-    POST_NEW_SMURF_FAILURE
+    POST_NEW_SMURF_FAILURE,
+    DELETE_SMURF,
+    DELETE_SMURF_SUCCESS,
+    DELETE_SMURF_FAILURE,
+    TOGGLE_IS_EDITING,
+    EDIT_SMURF,
+    EDIT_SMURF_SUCCESS,
+    EDIT_SMURF_FAILURE
 } from "../actions/smurfActions";
 
 const initialState = {
     smurfs: [],
     isFetching: false,
-    error: ""
+    error: "",
+    isEditing: false,
+    smurfToEdit: {}
 };
 
 export const smurfReducer = (state = initialState, action) => {
@@ -48,6 +57,69 @@ export const smurfReducer = (state = initialState, action) => {
                 error: ""
             };
         case POST_NEW_SMURF_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            };
+        case DELETE_SMURF:
+            return {
+                ...state,
+                isFetching: true,
+                error: ""
+            };
+        case DELETE_SMURF_SUCCESS:
+            let tempArray = [...state.smurfs];
+            const removeIndex = tempArray.findIndex(
+                smurf => smurf.id === action.payload.id
+            );
+
+            tempArray.splice(removeIndex, 1);
+
+            console.log("tempArray with removed smurf: ", tempArray);
+
+            return {
+                ...state,
+                smurfs: tempArray,
+                isFetching: false,
+                error: ""
+            };
+        case DELETE_SMURF_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            };
+        case TOGGLE_IS_EDITING:
+            return {
+                ...state,
+                isEditing: true,
+                smurfToEdit: action.payload
+            };
+        case EDIT_SMURF:
+            return {
+                ...state,
+                isFetching: true,
+                error: "",
+                isEditing: true
+            };
+        case EDIT_SMURF_SUCCESS:
+            let tempArr = [...state.smurfs];
+            const editIndex = tempArr.findIndex(
+                smurf => smurf.id === action.payload.id
+            );
+
+            tempArr[editIndex] = action.payload;
+
+            console.log("edited tempArr: ", tempArr);
+
+            return {
+                ...state,
+                smurfs: tempArr,
+                isFetching: false,
+                error: ""
+            };
+        case EDIT_SMURF_FAILURE:
             return {
                 ...state,
                 isFetching: false,
